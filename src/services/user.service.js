@@ -1,5 +1,5 @@
 const User = require('../models/user.model');
-const { hashPassword } = require('../helpers/authHelper');
+const { hashPassword, generateVerificationToken } = require('../helpers/authHelper');
 
 const createUser = async (userData) => {
   try {
@@ -16,6 +16,7 @@ const createUser = async (userData) => {
       name: userData.name,
       email: userData.email,
       password: hashedPassword,
+      verificationToken: generateVerificationToken(),
     });
 
     await user.save();
@@ -26,4 +27,21 @@ const createUser = async (userData) => {
   }
 };
 
-module.exports = { createUser };
+const getUserByVerificationToken = async (token) => {
+  try {
+    const user = await User.findOne({ verificationToken: token });
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const verifyUser = async (userId) => {
+  try {
+    await User.findByIdAndUpdate(userId, { verified: true});
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = { createUser, getUserByVerificationToken, verifyUser };

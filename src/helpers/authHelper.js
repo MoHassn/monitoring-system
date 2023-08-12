@@ -1,6 +1,7 @@
 require("dotenv").config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 const hashPassword = async (password) => {
   const saltRounds = 10;
@@ -20,4 +21,9 @@ const generateJWT = (userId) => {
   return token;
 };
 
-module.exports = { hashPassword, generateJWT, comparePassword };
+const generateVerificationToken = () => {
+  const randomBytes = crypto.randomBytes(32);
+  return randomBytes.toString('hex');
+};
+
+module.exports = { hashPassword, generateJWT, comparePassword, generateVerificationToken };
