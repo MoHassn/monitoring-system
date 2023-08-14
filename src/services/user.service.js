@@ -44,4 +44,13 @@ const verifyUser = async (userId) => {
   }
 };
 
-module.exports = { createUser, getUserByVerificationToken, verifyUser };
+const getUserById = async (userId) => {
+  try {
+    const user = await User.findById(userId);
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = { createUser, getUserByVerificationToken, verifyUser, getUserById };

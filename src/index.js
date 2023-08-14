@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const connectToDB = require('./db');
 const userRouter = require('./routes/user.route');
+const urlCheckRouter = require('./routes/urlCheck.route');
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -10,6 +11,7 @@ const port = process.env.PORT || 8000;
 app.use(express.json());
 app.use(cors());
 app.use('/users', userRouter)
+app.use('/checks', urlCheckRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello From Monitoring System');
