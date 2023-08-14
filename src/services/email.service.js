@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const userService = require('./user.service')
 require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
@@ -26,4 +27,28 @@ const sendVerificationEmail = async (recipientEmail, verificationToken) => {
   }
 };
 
-module.exports = { sendVerificationEmail };
+const sendStatusReportEmail = async (urlCheck) => {
+  const {status, name: urlCheckName} = urlCheck;
+  const {name, email} = await userService.getUserById(urlCheck.userId);
+  
+  const emailSubject = `URL Check Status Update: ${urlCheckName}`;
+    const emailText = `Dear ${name},\n\nThe status of your URL check "${urlCheckName}" is now ${status}.\n\nBest regards,\nThe Monitoring System Team`;
+
+    const mailOptions = {
+      from: process.env.EMAIL_USERNAME,
+      to: email,
+      subject: emailSubject,
+      text: emailText,
+    };
+
+    try{
+      await transporter.sendMail(mailOptions);
+      console.log('Status Email sent to user:', urlCheck.userId);
+    } catch (error) {
+    console.error('Error');
+  }
+
+};
+
+
+module.exports = { sendVerificationEmail, sendStatusReportEmail };

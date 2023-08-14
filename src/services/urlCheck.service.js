@@ -10,4 +10,24 @@ const createCheck = async (checkData) => {
   }
 };
 
-module.exports = { createCheck };
+
+const getAllChecks = async () => {
+  try {
+    const urlChecks = await UrlCheck.find();
+    return urlChecks;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getCheckById = async (checkId) => {
+  try {
+    const check = await UrlCheck.findById(checkId);
+    return check;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+module.exports = { createCheck,getAllChecks, getCheckById };

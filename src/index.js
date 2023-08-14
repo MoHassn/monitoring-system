@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectToDB = require('./db');
 const userRouter = require('./routes/user.route');
 const urlCheckRouter = require('./routes/urlCheck.route');
+const { startAllCrons } = require('./services/cron.service');
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -19,6 +20,6 @@ app.get('/', (req, res) => {
 
 app.listen(port, async () => {
   await connectToDB();
-
+  await startAllCrons();
   console.log(`app is listening on http://localhost:${port}`);
 });
