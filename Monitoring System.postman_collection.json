@@ -1,0 +1,265 @@
+{
+	"info": {
+		"_postman_id": "2a74e7ed-c5b2-4ebb-aee5-e2cb65638444",
+		"name": "Monitoring System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Mohamed Hassan\",\n    \"email\": \"mohamed.hassn.dev@gmail.com\",\n    \"password\": \"sfddsf\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/users/register/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"mohamed.hassn.dev@gmail.com\",\n    \"password\": \"sfddsf\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/users/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "urlCheck",
+			"item": [
+				{
+					"name": "create check",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGQ3ZGQxNTk3NGUzNDhhZWZiYjY0YmEiLCJpYXQiOjE2OTE4Njg0Mzd9.DWdf33msuY2dTrWufwwFPGd1HkUOL-W4sqVX-k6wpcQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Example HTTP Check\",\n  \"url\": \"http://example.com\",\n  \"protocol\": \"HTTP\",\n  \"interval\": 1,\n  \"assert\": {\n    \"statusCode\": 200\n  },\n  \"tags\": [\"example\", \"test\"]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/checks/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"checks",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all checks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGQ3ZGQxNTk3NGUzNDhhZWZiYjY0YmEiLCJpYXQiOjE2OTE4Njg0Mzd9.DWdf33msuY2dTrWufwwFPGd1HkUOL-W4sqVX-k6wpcQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/checks/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"checks",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGQ3ZGQxNTk3NGUzNDhhZWZiYjY0YmEiLCJpYXQiOjE2OTE4Njg0Mzd9.DWdf33msuY2dTrWufwwFPGd1HkUOL-W4sqVX-k6wpcQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Example HTTP Check 2\",\n  \"url\": \"http://example.com\",\n  \"protocol\": \"HTTP\",\n  \"interval\": 2,\n  \"assert\": {\n    \"statusCode\": 200\n  },\n  \"tags\": [\"example\", \"test\"]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/checks/64d7df522a84b0d538528801",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"checks",
+								"64d7df522a84b0d538528801"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGQ3ZGQxNTk3NGUzNDhhZWZiYjY0YmEiLCJpYXQiOjE2OTE4Njg0Mzd9.DWdf33msuY2dTrWufwwFPGd1HkUOL-W4sqVX-k6wpcQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/checks/64d7df522a84b0d538528801",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"checks",
+								"64d7df522a84b0d538528801"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "report",
+			"item": [
+				{
+					"name": "Get report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGQ3ZGQxNTk3NGUzNDhhZWZiYjY0YmEiLCJpYXQiOjE2OTE4Njg0Mzd9.DWdf33msuY2dTrWufwwFPGd1HkUOL-W4sqVX-k6wpcQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/reports/64dafda6782a564a405ca04f",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"reports",
+								"64dafda6782a564a405ca04f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "root",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
