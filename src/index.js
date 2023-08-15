@@ -4,7 +4,7 @@ const cors = require('cors');
 const connectToDB = require('./db');
 const userRouter = require('./routes/user.route');
 const urlCheckRouter = require('./routes/urlCheck.route');
-// const { startAllCrons } = require('./services/cron.service');
+const reportRouter = require('./routes/report.route');
 const urlCheckService = require('./services/urlCheck.service');
 const cronService = require('./services/cron.service');
 
@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/users', userRouter)
 app.use('/checks', urlCheckRouter)
+app.use('/reports', reportRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello From Monitoring System');

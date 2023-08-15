@@ -5,6 +5,7 @@ const createCheck = async (checkData) => {
   try {
     const newCheck = new UrlCheck(checkData);
     await newCheck.save();
+    cronService.startCronForUrlCheck(newCheck);
     return newCheck;
   } catch (error) {
     throw error;
