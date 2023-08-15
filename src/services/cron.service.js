@@ -2,7 +2,6 @@ const cron = require('node-cron');
 const axios = require('axios');
 const https = require('https');
 const urlPackage = require('url');
-const urlCheckService = require('./urlCheck.service');
 const emailService = require('./email.service');
 const Response = require('../models/response.model');
 
@@ -105,23 +104,8 @@ const stopCronForUrlCheck = (urlCheckId) => {
   }
 };
 
-const startAllCrons = async () => {
-  try {
-    const allUrlChecks = await urlCheckService.getAllChecks(); // Fetch all URL checks from the database
-
-    allUrlChecks.forEach((urlCheck) => {
-      startCronForUrlCheck(urlCheck); // Start a cron for each URL check
-      console.log(`Cron started for URL check "${urlCheck.name}"`);
-    });
-
-    console.log('All cron jobs started.');
-  } catch (error) {
-    console.error('Error starting cron jobs:', error);
-  }
-};
 
 module.exports = {
   startCronForUrlCheck,
   stopCronForUrlCheck,
-  startAllCrons,
 };

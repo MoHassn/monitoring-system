@@ -27,8 +27,13 @@ const createUrlCheckSchema = Joi.object({
   ignoreSSL: Joi.boolean().default(false),
 });
 
+const paginationSchema = Joi.object({
+  page: Joi.number().integer().min(1).default(1),
+  limit: Joi.number().integer().min(1).max(100).default(10),
+});
 
-const createCheck = async (req, res) => {
+
+const createURLCheck = async (req, res) => {
   try {
     const checkData = req.body;
     
@@ -48,4 +53,62 @@ const createCheck = async (req, res) => {
   }
 };
 
-module.exports = { createCheck };
+const getAllURLChecks = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const { value: paginationParams, error } = paginationSchema.validate(req.query);
+    if (error) {
+      return res.status(400).json({ errors: error.details });
+    }
+
+    const { page, limit } = paginationParams;
+
+    const urlChecks = await urlCheckService.listAllChecks(userId, page, limit);
+
+    res.status(200).json(urlChecks);
+  } catch (error) {
+    console.error('Error getting URL checks:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+const updateURLCheck = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const urlCheckId = req.params.checkId;
+
+    const { value: data, error } = createUrlCheckSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ errors: error.details });
+    }
+
+    const updatedURLCheck = await urlCheckService.updateCheck(userId, urlCheckId, data);
+
+    res.status(200).json(updatedURLCheck);
+  } catch (error) {
+    console.error('Error updating URL check:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+const deleteURLCheck = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const urlCheckId = req.params.checkId;
+
+    const urlCheck = await urlCheckService.getCheckById(urlCheckId);
+    if (!urlCheck) {
+      return res.status(404).json({ error: 'URL check not found' });
+    }
+    await urlCheckService.deleteCheck(userId, urlCheckId);
+
+    res.status(200).json({ message: 'URL check deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting URL check:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+    
+
+module.exports = { createURLCheck, getAllURLChecks, updateURLCheck, deleteURLCheck };
