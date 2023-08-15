@@ -1,6 +1,6 @@
 const userService = require('../services/user.service');
 const emailService = require('../services/email.service');
-const { generateJWT } = require('../helpers/authHelper');
+const { generateJWT, verifyPassword } = require('../helpers/authHelper');
 const Joi = require('joi');
 
 const register = async (req, res) => {
@@ -49,5 +49,40 @@ const verifyEmail = async (req, res) => {
   }
 };
 
-module.exports = { register, verifyEmail };
+const login = async (req, res) => {
+  try {
+    const schema = Joi.object({
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    });
+
+    const { error } = schema.validate(req.body);
+
+    if (error) {
+      res.status(400).json({ error: error.details[0].message });
+    }
+
+    const user = await userService.getUserByEmail(req.body.email);
+    console.log({user})
+    
+    if (!user) {
+      return res.status(404).json({ error: 'User or Password may be incorrect' });
+    }
+
+    const valid = await verifyPassword(req.body.password, user.password);
+    
+    if(!valid){
+      return res.status(404).json({ error: 'User or Password may be incorrect' });
+    }
+
+    const token = generateJWT(user._id);
+    res.status(200).json({ message: 'User logged in successfully', token });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
+module.exports = { register, verifyEmail, login };
 

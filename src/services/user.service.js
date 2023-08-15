@@ -53,4 +53,15 @@ const getUserById = async (userId) => {
   }
 };
 
-module.exports = { createUser, getUserByVerificationToken, verifyUser, getUserById };
+const getUserByEmail = async (email) => {
+  try {
+    const user = await User.findOne({ email });
+    console.log({user})
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+module.exports = { createUser, getUserByVerificationToken, verifyUser, getUserById, getUserByEmail };

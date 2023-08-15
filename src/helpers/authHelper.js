@@ -26,4 +26,15 @@ const generateVerificationToken = () => {
   return randomBytes.toString('hex');
 };
 
-module.exports = { hashPassword, generateJWT, comparePassword, generateVerificationToken };
+const verifyPassword = async (password, hashedPassword) => {
+  console.log(password, hashedPassword)
+  try {
+    const isValid = await bcrypt.compare(password, hashedPassword);
+    return isValid;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+module.exports = { hashPassword, generateJWT, comparePassword, generateVerificationToken, verifyPassword };
